@@ -56,7 +56,6 @@ const HomePage = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
   });
   useEffect(() => {
     if (!token) return;

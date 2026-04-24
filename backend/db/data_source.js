@@ -11,6 +11,6 @@ const AppDataSource = new DataSource({
   },
   entities: [User, Newspost],
   migrations: ["db/migrations/*.js"],
-  synchronize: false,
+  synchronize: true,
 });
 export default AppDataSource;
