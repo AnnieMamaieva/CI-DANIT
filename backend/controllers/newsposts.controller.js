@@ -2,7 +2,7 @@ import NewspostsService from "../services/newsposts.service.js";
 
 const mapNewspostResponse = (newspost) => ({
   id: newspost.id,
-  title: newspost.title,
+  title: newspost.header,
   text: newspost.text,
   createdAt: newspost.createdAt,
   author: newspost.author

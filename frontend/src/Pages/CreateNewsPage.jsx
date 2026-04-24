@@ -24,7 +24,10 @@ const CreateNewsPage = () => {
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          title: formData.title,
+          text: formData.text,
+        }),
       });
 
       const data = await response.json().catch(() => null);

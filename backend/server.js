@@ -34,3 +34,4 @@ AppDataSource.initialize()
   });
 
 //http://localhost:8000/api/newsposts
+//http://localhost:8000

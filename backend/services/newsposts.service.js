@@ -10,8 +10,15 @@ class NewspostsService {
   }
   static async create(data) {
     try {
-      return await NewspostsRepository.create(data);
+      const newspostData = {
+        header: data.title,
+        text: data.text,
+        author: data.author,
+      };
+
+      return await NewspostsRepository.create(newspostData);
     } catch (err) {
+      console.error("REAL CREATE ERROR:", err);
       throw new NewspostsServiceError("Failed to create newspost");
     }
   }

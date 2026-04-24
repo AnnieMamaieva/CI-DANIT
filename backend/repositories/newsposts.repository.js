@@ -6,6 +6,9 @@ class NewspostsRepository {
     const size = Number(params.size) || 10;
     const newspostsRepository = AppDataSource.getRepository("Newspost");
     return await newspostsRepository.find({
+      order: {
+        createdAt: "DESC",
+      },
       skip: page * size,
       take: size,
     });
