@@ -1,5 +1,7 @@
 import "dotenv/config";
 import express from "express";
+import swaggerUi from "swagger-ui-express";
+import fs from "fs";
 import newspostsRoutes from "./routes/newsposts.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import passport from "./passport.js";
@@ -10,6 +12,8 @@ import AppDataSource from "./db/data_source.js";
 
 const app = express();
 app.use(cors());
+const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf-8"));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 app.use(loggerMiddleware);
 app.use(passport.initialize());
@@ -35,3 +39,4 @@ AppDataSource.initialize()
 
 //http://localhost:8000/api/newsposts
 //http://localhost:8000
+//http://localhost:8000/api-docs
