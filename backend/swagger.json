@@ -11,7 +11,44 @@
     "http"
   ],
   "paths": {
-    "/": {
+    "/register": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user": {
       "get": {
         "description": "",
         "responses": {
@@ -21,7 +58,7 @@
         }
       }
     },
-    "/api/newsposts": {
+    "/newsposts": {
       "get": {
         "description": "",
         "parameters": [
@@ -51,7 +88,7 @@
         }
       }
     },
-    "/api/newsposts/error": {
+    "/newsposts/error": {
       "get": {
         "description": "",
         "responses": {
@@ -61,7 +98,7 @@
         }
       }
     },
-    "/api/newsposts/{id}": {
+    "/newsposts/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -116,53 +153,6 @@
           },
           "404": {
             "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/auth/register": {
-      "post": {
-        "description": "",
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/auth/user": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }

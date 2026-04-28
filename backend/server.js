@@ -1,36 +1,15 @@
 import "dotenv/config";
-import express from "express";
-import swaggerUi from "swagger-ui-express";
-import fs from "fs";
-import newspostsRoutes from "./routes/newsposts.routes.js";
-import authRoutes from "./routes/auth.routes.js";
-import passport from "./passport.js";
-import cors from "cors";
-import errorHandlerMiddleware from "./middleware/errorHandler.middleware.js";
-import loggerMiddleware from "./middleware/logger.middleware.js";
+import app from "./app.js";
 import AppDataSource from "./db/data_source.js";
 
-const app = express();
-app.use(cors());
-const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf-8"));
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(express.json());
-app.use(loggerMiddleware);
-app.use(passport.initialize());
-app.use("/api", newspostsRoutes);
-app.use("/auth", authRoutes);
-
-const PORT = process.env.PORT;
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-app.use(errorHandlerMiddleware);
+const PORT = process.env.PORT || 8000;
 
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
+
     app.listen(PORT, () => {
-      console.log(`Server is running on  ${PORT}`);
+      console.log(`Server is running on ${PORT}`);
     });
   })
   .catch((err) => {
