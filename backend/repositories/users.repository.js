@@ -6,9 +6,18 @@ class UsersRepository {
     return usersRepository.save(user);
   }
   static getByEmail(email) {
-    const usersRepository =  AppDataSource.getRepository("User");
+    const usersRepository = AppDataSource.getRepository("User");
     return usersRepository.findOne({
       where: { email },
+    });
+  }
+  static getUsersForNotifications() {
+    const usersRepository = AppDataSource.getRepository("User");
+
+    return usersRepository.find({
+      where: {
+        sendNotification: true,
+      },
     });
   }
 }

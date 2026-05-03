@@ -9,20 +9,23 @@ const seed = async () => {
     console.log("DB connected");
     const userRepository = AppDataSource.getRepository("User");
     console.log("Repos are ready");
-    const existingUser = await userRepository.findOneBy({
-      email: "seedcreateduser@test.com",
-    });
-    console.log("Existing user:", existingUser);
-    let seedUser = existingUser;
-    if (!seedUser) {
-      const hashedPassword = await bcrypt.hash("seed123456", 10);
-      seedUser = await userRepository.save({
-        email: "seedcreateduser@test.com",
-        password: hashedPassword,
-      });
-      console.log("User created with Seed:", seedUser);
-    }
-    console.log("Seed user:", seedUser);
+    const createOrUpdateUser = async (email, channel) => {
+      let user = await userRepository.findOneBy({ email });
+      if (!user) {
+        const hashedPassword = await bcrypt.hash("seed123456", 10);
+        user = userRepository.create({
+          email,
+          password: hashedPassword,
+        });
+      }
+      user.sendNotification = true;
+      user.notificationChannel = channel;
+      return userRepository.save(user);
+    };
+    const logUser = await createOrUpdateUser("loguser@test.com", "log");
+    const alertUser = await createOrUpdateUser("alertuser@test.com", "alert");
+    console.log("Users ready:", logUser.email, alertUser.email);
+
     const newspostRepository = AppDataSource.getRepository("Newspost");
     const existingPostsCount = await newspostRepository.count();
     console.log("Existing posts:", existingPostsCount);
@@ -33,7 +36,7 @@ const seed = async () => {
     const fakePostsArray = Array.from({ length: 20 }, () => ({
       header: faker.lorem.sentence(),
       text: faker.lorem.paragraph(),
-      author: seedUser,
+      author: logUser,
     }));
 
     console.log("Fake posts ready:", fakePostsArray.length);

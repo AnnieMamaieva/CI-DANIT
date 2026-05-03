@@ -45,16 +45,17 @@ class NewspostsController {
 
   static async create(req, res, next) {
     try {
+      const io = req.app.get("io");
       const newspost = await NewspostsService.create({
         ...req.body,
         author: req.user,
+        io,
       });
       res.status(201).json(mapNewspostResponse(newspost));
     } catch (error) {
       next(error);
     }
   }
-
   static async update(req, res, next) {
     try {
       const { id } = req.params;

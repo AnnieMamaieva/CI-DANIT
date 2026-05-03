@@ -16,6 +16,17 @@ export const User = new EntitySchema({
     password: {
       type: "varchar",
     },
+    sendNotification: {
+      type: "boolean",
+
+      default: false,
+    },
+
+    notificationChannel: {
+      type: "varchar",
+
+      default: "log",
+    },
   },
   relations: {
     newsposts: {

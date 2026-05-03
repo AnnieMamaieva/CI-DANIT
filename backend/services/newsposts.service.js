@@ -1,5 +1,6 @@
 import NewspostsRepository from "../repositories/newsposts.repository.js";
 import NewspostsServiceError from "../errors/NewspostsServiceError.js";
+import NotificationService from "./notification.service.js";
 class NewspostsService {
   static async getAll(params) {
     try {
@@ -15,8 +16,9 @@ class NewspostsService {
         text: data.text,
         author: data.author,
       };
-
-      return await NewspostsRepository.create(newspostData);
+      const createdPost = await NewspostsRepository.create(newspostData);
+      await NotificationService.notifyNewPost(createdPost, data.io);
+      return createdPost;
     } catch (err) {
       console.error("REAL CREATE ERROR:", err);
       throw new NewspostsServiceError("Failed to create newspost");
